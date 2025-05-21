@@ -24,33 +24,48 @@ import {
   InputLeftElement,
   useMediaQuery,
   Spinner,
-  FormControl
-} from '@chakra-ui/react';
+  FormControl,
+} from "@chakra-ui/react";
 
-import { useState, useMemo } from 'react';
-import { FaEdit, FaTrash, FaPlus, FaSearch, FaFilter, FaRedo } from 'react-icons/fa';
+import { useState, useMemo } from "react";
+import {
+  FaEdit,
+  FaTrash,
+  FaPlus,
+  FaSearch,
+  FaFilter,
+  FaRedo,
+} from "react-icons/fa";
 import {
   useBooks,
   useAddBook,
   useUpdateBook,
   useDeleteBook,
-} from './hooks/useBooks';
-import BookForm from '@/components/BookForm';
-import DeleteConfirmationModal from '@/components/DeleteConfirmationModal';
-import LoadingSkeleton from '@/components/LoadingSkeleton';
-import { GENRE_OPTIONS, STATUS_OPTIONS } from './utils/constants';
+} from "../hooks/useBooks";
+import BookForm from "@/components/BookForm";
+import DeleteConfirmationModal from "@/components/DeleteConfirmationModal";
+import LoadingSkeleton from "@/components/LoadingSkeleton";
+import { GENRE_OPTIONS, STATUS_OPTIONS } from "../utils/constants";
 
 const HomePage = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // 10 books per page
-  const [search, setSearch] = useState('');
-  const [filterGenre, setFilterGenre] = useState('All');
-  const [filterStatus, setFilterStatus] = useState('All');
+  const [search, setSearch] = useState("");
+  const [filterGenre, setFilterGenre] = useState("All");
+  const [filterStatus, setFilterStatus] = useState("All");
   const [editBookData, setEditBookData] = useState(null);
   const [bookToDelete, setBookToDelete] = useState(null);
 
-  const { isOpen: isFormModalOpen, onOpen: onFormModalOpen, onClose: onFormModalClose } = useDisclosure();
-  const { isOpen: isDeleteModalOpen, onOpen: onDeleteModalOpen, onClose: onDeleteModalClose } = useDisclosure();
+  const {
+    isOpen: isFormModalOpen,
+    onOpen: onFormModalOpen,
+    onClose: onFormModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteModalOpen,
+    onOpen: onDeleteModalOpen,
+    onClose: onDeleteModalClose,
+  } = useDisclosure();
 
   // Media query for responsiveness
   const [isLargerThanMd] = useMediaQuery("(min-width: 768px)");
@@ -59,22 +74,23 @@ const HomePage = () => {
     const params = {
       _page: page,
       _limit: limit,
-      _sort: 'title', 
-      _order: 'asc',
+      _sort: "title",
+      _order: "asc",
     };
     if (search) {
-      params.q = search; 
+      params.q = search;
     }
-    if (filterGenre !== 'All') {
+    if (filterGenre !== "All") {
       params.genre = filterGenre;
     }
-    if (filterStatus !== 'All') {
+    if (filterStatus !== "All") {
       params.status = filterStatus;
     }
     return params;
   }, [page, limit, search, filterGenre, filterStatus]);
 
-  const { data, isLoading, isFetching, isError, refetch } = useBooks(queryParams);
+  const { data, isLoading, isFetching, isError, refetch } =
+    useBooks(queryParams);
   const totalBooks = data?.totalCount || 0;
   const books = data?.data || [];
   const totalPages = Math.ceil(totalBooks / limit);
@@ -84,7 +100,7 @@ const HomePage = () => {
   const deleteBookMutation = useDeleteBook();
 
   const handleAddBookClick = () => {
-    setEditBookData(null); 
+    setEditBookData(null);
     onFormModalOpen();
   };
 
@@ -100,7 +116,10 @@ const HomePage = () => {
 
   const handleFormSubmit = async (bookData) => {
     if (editBookData) {
-      await updateBookMutation.mutateAsync({ id: editBookData.id, ...bookData });
+      await updateBookMutation.mutateAsync({
+        id: editBookData.id,
+        ...bookData,
+      });
     } else {
       await addBookMutation.mutateAsync(bookData);
     }
@@ -116,17 +135,17 @@ const HomePage = () => {
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
   const handleGenreFilterChange = (e) => {
     setFilterGenre(e.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
   const handleStatusFilterChange = (e) => {
     setFilterStatus(e.target.value);
-    setPage(1); 
+    setPage(1);
   };
 
   if (isError) {
@@ -135,7 +154,12 @@ const HomePage = () => {
 
   return (
     <Box p={4}>
-      <Flex mb={6} justifyContent="space-between" alignItems="center" flexWrap="wrap">
+      <Flex
+        mb={6}
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
+      >
         <Heading as="h1" size="xl" mb={isLargerThanMd ? 0 : 4}>
           Book Dashboard
         </Heading>
@@ -143,21 +167,21 @@ const HomePage = () => {
           colorScheme="teal"
           leftIcon={<FaPlus />}
           onClick={handleAddBookClick}
-          width={isLargerThanMd ? 'auto' : '100%'}
+          width={isLargerThanMd ? "auto" : "100%"}
         >
           Add New Book
         </Button>
       </Flex>
 
       <Stack
-        direction={isLargerThanMd ? 'row' : 'column'}
+        direction={isLargerThanMd ? "row" : "column"}
         spacing={4}
         mb={6}
         alignItems="flex-end"
       >
         <InputGroup flex="1">
-          <InputLeftElement pointerEvents='none'>
-            <FaSearch color='gray.300' />
+          <InputLeftElement pointerEvents="none">
+            <FaSearch color="gray.300" />
           </InputLeftElement>
           <Input
             placeholder="Search by title or author"
@@ -166,7 +190,7 @@ const HomePage = () => {
           />
         </InputGroup>
 
-        <FormControl width={isLargerThanMd ? '200px' : '100%'}>
+        <FormControl width={isLargerThanMd ? "200px" : "100%"}>
           <Select
             placeholder="Filter by Genre"
             value={filterGenre}
@@ -180,7 +204,7 @@ const HomePage = () => {
           </Select>
         </FormControl>
 
-        <FormControl width={isLargerThanMd ? '200px' : '100%'}>
+        <FormControl width={isLargerThanMd ? "200px" : "100%"}>
           <Select
             placeholder="Filter by Status"
             value={filterStatus}
@@ -197,9 +221,9 @@ const HomePage = () => {
           icon={<FaRedo />}
           aria-label="Clear Filters"
           onClick={() => {
-            setSearch('');
-            setFilterGenre('All');
-            setFilterStatus('All');
+            setSearch("");
+            setFilterGenre("All");
+            setFilterStatus("All");
             setPage(1);
           }}
         />
@@ -209,7 +233,7 @@ const HomePage = () => {
         {isLoading || isFetching ? (
           <LoadingSkeleton type="table" />
         ) : (
-          <Table variant="simple" size={isLargerThanMd ? 'md' : 'sm'}>
+          <Table variant="simple" size={isLargerThanMd ? "md" : "sm"}>
             <Thead>
               <Tr>
                 <Th>Title</Th>
@@ -223,7 +247,9 @@ const HomePage = () => {
             <Tbody>
               {books.length === 0 ? (
                 <Tr>
-                  <Td colSpan={6} textAlign="center">No books found.</Td>
+                  <Td colSpan={6} textAlign="center">
+                    No books found.
+                  </Td>
                 </Tr>
               ) : (
                 books.map((book) => (
@@ -237,8 +263,16 @@ const HomePage = () => {
                         px={2}
                         py={1}
                         borderRadius="md"
-                        bg={book.status === 'Available' ? 'green.100' : 'orange.100'}
-                        color={book.status === 'Available' ? 'green.800' : 'orange.800'}
+                        bg={
+                          book.status === "Available"
+                            ? "green.100"
+                            : "orange.100"
+                        }
+                        color={
+                          book.status === "Available"
+                            ? "green.800"
+                            : "orange.800"
+                        }
                         display="inline-block"
                       >
                         {book.status}
@@ -303,7 +337,7 @@ const HomePage = () => {
           isOpen={isDeleteModalOpen}
           onClose={onDeleteModalClose}
           onConfirm={handleConfirmDelete}
-          itemToDelete={{ type: 'Book', name: bookToDelete.title }}
+          itemToDelete={{ type: "Book", name: bookToDelete.title }}
         />
       )}
     </Box>

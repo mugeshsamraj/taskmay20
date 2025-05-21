@@ -1,7 +1,6 @@
-import { API_BASE_URL } from '../utils/constants';
+import { API_BASE_URL } from "../../utils/constants";
 
 const API_URL = `${API_BASE_URL}/books`;
-
 
 export const getBooks = async (params = {}) => {
   const query = new URLSearchParams(params).toString();
@@ -12,7 +11,7 @@ export const getBooks = async (params = {}) => {
     throw new Error(`Failed to fetch books: ${errorText}`);
   }
 
-  const totalCount = res.headers.get('X-Total-Count');
+  const totalCount = res.headers.get("X-Total-Count");
   const data = await res.json();
 
   return {
@@ -21,9 +20,8 @@ export const getBooks = async (params = {}) => {
   };
 };
 
-
 export const getBookById = async (id) => {
-  if (!id) throw new Error('Book ID is required');
+  if (!id) throw new Error("Book ID is required");
 
   const res = await fetch(`${API_URL}/${id}`);
 
@@ -35,12 +33,11 @@ export const getBookById = async (id) => {
   return res.json();
 };
 
-
 export const createBook = async (bookData) => {
   const res = await fetch(API_URL, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(bookData),
   });
@@ -53,14 +50,13 @@ export const createBook = async (bookData) => {
   return res.json();
 };
 
-
 export const updateBook = async (id, bookData) => {
-  if (!id) throw new Error('Book ID is required');
+  if (!id) throw new Error("Book ID is required");
 
   const res = await fetch(`${API_URL}/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(bookData),
   });
@@ -73,12 +69,11 @@ export const updateBook = async (id, bookData) => {
   return res.json();
 };
 
-
 export const deleteBook = async (id) => {
-  if (!id) throw new Error('Book ID is required');
+  if (!id) throw new Error("Book ID is required");
 
   const res = await fetch(`${API_URL}/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 
   if (!res.ok) {

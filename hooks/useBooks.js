@@ -1,10 +1,15 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBooks, createBook, updateBook, deleteBook } from '../api/books';
-import { toast } from 'react-toastify';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getBooks,
+  createBook,
+  updateBook,
+  deleteBook,
+} from "../pages/api/books";
+import { toast } from "react-toastify";
 
 export const useBooks = (params) => {
   return useQuery({
-    queryKey: ['books', params],
+    queryKey: ["books", params],
     queryFn: () => getBooks(params),
     keepPreviousData: true,
     onError: (error) => {
@@ -19,8 +24,8 @@ export const useAddBook = () => {
   return useMutation({
     mutationFn: createBook,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      toast.success('Book added successfully!');
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+      toast.success("Book added successfully!");
     },
   });
 };
@@ -32,8 +37,8 @@ export const useUpdateBook = () => {
     // mutationFn expects an object with { id, ...bookData }
     mutationFn: ({ id, ...bookData }) => updateBook(id, bookData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      toast.success('Book updated successfully!');
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+      toast.success("Book updated successfully!");
     },
     onError: (error) => {
       toast.error(`Error updating book: ${error.message}`);
@@ -47,8 +52,8 @@ export const useDeleteBook = () => {
   return useMutation({
     mutationFn: deleteBook,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] });
-      toast.success('Book deleted successfully!');
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+      toast.success("Book deleted successfully!");
     },
     onError: (error) => {
       toast.error(`Error deleting book: ${error.message}`);
