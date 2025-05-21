@@ -1,40 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Book Management Dashboard
+
+A responsive React.js dashboard built with Next.js, Chakra UI, React Query, and React Hook Form for managing a list of books. It supports CRUD operations, pagination, searching, and filtering using a mock API.
+
+
+## Features
+
+- **Dashboard:**
+  - List all books with columns: Title, Author, Genre, Year, Status.
+  - Pagination with 10 books per page.
+  - Search books by title or author.
+  - Filters by genre and status.
+
+- **Add/Edit Book:**
+  - Modal form with validations using React Hook Form.
+  - Supports adding new books or editing existing ones.
+
+- **Delete Book:**
+  - Confirmation dialog before deleting a book.
+
+- **Notifications:**
+  - Success and error toasts using React Toastify.
+
+- **Responsive UI:**
+  - Built with Chakra UI for responsive and accessible design.
+
+- **API Integration:**
+  - Uses JSON Server as a mock backend.
+  - React Query manages API data fetching and caching.
+
+- **Loading State:**
+  - Loading skeletons for better user experience during data fetches.
+
+---
+
+## Technologies Used
+
+- **Framework:** Next.js (React SSR framework)  
+- **UI Library:** Chakra UI  
+- **Form Handling:** React Hook Form  
+- **API State Management:** React Query  
+- **Mock API:** JSON Server  
+- **Notifications:** React Toastify  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (>= 16.x recommended)  
+- npm or yarn  
+- JSON Server installed globally (or you can use `npx`)
+
+### Installation
+
+1. **Clone the repository**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+git clone <repository-url>
+cd book-management-dashboard
